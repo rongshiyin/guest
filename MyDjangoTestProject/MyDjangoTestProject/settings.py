@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sign',
+    'bootstrap4',
 ]
 
 MIDDLEWARE = [
@@ -86,7 +87,8 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': '123456',
         'OPTIONS': {
-        'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        #'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            'sql_mode': 'TRADITIONAL',
         },
     }
 }
@@ -126,7 +128,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
