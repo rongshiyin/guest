@@ -86,7 +86,8 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': '123456',
         'OPTIONS': {
-        'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        #'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        'sql_mode': 'traditional',
         },
     }
 }
