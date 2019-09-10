@@ -81,4 +81,35 @@ def sign_index(request, eid):
     event = get_object_or_404(Event, id=eid)
     return render(request, 'sign_index.html', {'event': event})
 
+def sign_index_action(request, eid):
+    event = get_object_or_404(Event, id=eid)
+    phone = request.POST.get('phone','')
+    
+    result = Guest.objects.filter(phone = phone)
+    if not result:
+        return render(request, 'sign_index.html', {'event': event,'hint': 'phone error.'})
+    
+    result = Guest.objects.filter(phone=phone,event_id=eid)
+    if not result:
+        return render(request, 'sign_index.html', {'event': event,'hint': 'event id or phone error.'})
+    
+    result = Guest.objects.get(phone=phone,event_id=eid)
+    if result.sign:
+        return render(request, 'sign_index.html', {'event': event, 'hint': "user has sign in."})
+    else:
+        Guest.objects.filter(phone=phone, event_id=eid).update(sign = '1')
+        return render(request, 'sign_index.html', {'event': event,'hint':'sign in success!','guest': result})
+          
+
+def logout(request):
+    auth.logout(request) #退出登录
+    response = HttpResponseRedirect('/login/')
+    return response
+
+
+
+
+
+
+
 
