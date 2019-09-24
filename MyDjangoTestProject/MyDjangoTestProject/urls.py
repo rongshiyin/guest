@@ -31,4 +31,5 @@ urlpatterns = [
     path('search_realname/', views.search_realname),
     re_path(r'^sign_index/(?P<eid>[0-9]+)/$', views.sign_index),
     re_path(r'^sign_index_action/(?P<eid>[0-9]+)/$', views.sign_index_action),
+    path('api/', include('sign.urls', namespace="sign")),
 ]
