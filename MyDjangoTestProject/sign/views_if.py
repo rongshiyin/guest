@@ -15,8 +15,7 @@ def add_event(request):
     if eid == '' or name == '' or limit == '' or  address == '' or start_time == '':
         return JsonResponse({'status':10021,'message':'parameter error'})
     
-    result =Event.objects.filter(id = eid)
-    
+    result =Event.objects.filter(id = eid)    
     if result:
         return JsonResponse({'status':10022,'message':'event id already exists'})
     
@@ -32,8 +31,7 @@ def add_event(request):
         Event.objects.create(id=eid,name=name,limit=limit,address=address,status=int(status),start_time=start_time)
     except  ValidationError as e:
         error = 'start_time format error. It must be in YYYY-MM-DD HH:MM:SS format.'
-        return JsonResponse({'status':10024,'message':error})
-        
+        return JsonResponse({'status':10024,'message':error})        
     return JsonResponse({'status':200,'message':'add event success'})
 
 
@@ -135,17 +133,17 @@ def get_guest_list(request):
                 guest['phone'] = r.phone
                 guest['email'] = r.email
                 guest['sign'] = r.sign
-            datas.append(guest)
-        return JsonResponse({'status':200, 'message':'success', 'data':datas})
-    else:
-        return JsonResponse({'status':10022, 'message':'query result is empty'})
+                datas.append(guest)
+            return JsonResponse({'status':200, 'message':'success', 'data':datas})
+        else:
+            return JsonResponse({'status':10022, 'message':'query result is empty'})
     
     if eid != '' and phone != '':
         guest = {}
         try:
             result = Guest.objects.get(phone=phone,event_id=eid)
         except ObjectDoesNotExist:
-            return JsonResponse({'status':10022, 'message':'query result is empty'})
+            return JsonResponse({'status':10023, 'message':'ObjectDoesNotExist'})
         else:
             guest['realname'] = result.realname
             guest['phone'] = result.phone
